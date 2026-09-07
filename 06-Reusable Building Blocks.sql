@@ -20,7 +20,38 @@ SELECT
 GO
 
 --Question2:Create a stored procedure that returns all orders for a given CustomerID, passed in as a parameter.
-  CREATE PROCEDURE GetCustomerOrders
+CREATE  PROCEDURE OrderDetail
+     @CustomerID nchar(10)
+AS
+BEGIN
+ SELECT *
+ FROM dbo.Orders
+ WHERE @CustomerID = CustomerID
+END;
+GO
+--Question3:Create a stored procedure that accepts a start and end date and returns total revenue for that range.
+CREATE PROCEDURE GetTotalRevenueByDateRange
+    @StartDate DATETIME,
+    @EndDate DATETIME
+AS
+BEGIN
+    SELECT 
+        SUM(OD.UnitPrice * OD.Quantity * (1 - OD.Discount)) AS TotalRevenue
+    FROM dbo.[Order Details] AS OD
+    JOIN dbo.Orders AS O ON OD.OrderID = O.OrderID
+    WHERE O.OrderDate >= @StartDate AND O.OrderDate <= @EndDate;
+END;
+GO
+--Question4:Which column would benefit most from an index if this database had millions of orders, and why?
+--1. CustomerID
+--Why: You often search for all orders belonging to one specific customer.
+--Benefit: It makes the search instant. Without this index, the database must scan the entire table row by row, which is very slow.
+
+--2. OrderDate
+--Why: You often need reports for specific time periods (e.g., “orders in 2025” or “last month”).
+--Benefit: It keeps the dates sorted chronologically. The database can quickly jump to the right timeframe instead of checking every single order in the history.
+
+
 
 
   

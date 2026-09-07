@@ -1,5 +1,4 @@
 --LEVEL2:This section is about Joins — Connecting the Tables
-Questions To Answer
 USE Northwind
 GO
 --Question1:for every order,show the cutomer's company name and the employee who processed it
@@ -18,9 +17,9 @@ P.ProductName,
 C.CategoryName,
 S.CompanyName AS "Supplier Company"
 FROM dbo.Products AS P
-INNER JOIN dbo.Categories AS C
+LEFT JOIN dbo.Categories AS C
    ON P.CategoryID=C.CategoryID
-INNER JOIN dbo.Suppliers AS S
+LEFT JOIN dbo.Suppliers AS S
    ON S.SupplierID=P.SupplierID
 GO
 --Question3:Which customers have never placed single order?

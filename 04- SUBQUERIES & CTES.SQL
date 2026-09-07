@@ -13,10 +13,11 @@ HAVING SUM(Quantity * UnitPrice) > (
     -- Subquery: 
     SELECT AVG(CustomerTotal)
     FROM (
-        SELECT SUM(Quantity * UnitPrice) AS CustomerTotal
+        SELECT 
+		(Quantity * UnitPrice) AS CustomerTotal
         FROM dbo.[Order Details] AS OD2
         JOIN dbo.Orders AS O2 ON OD2.OrderID = O2.OrderID
-        GROUP BY O2.CustomerID
+        
     ) AS SubTable
 )
 ORDER BY TotalSpent DESC
