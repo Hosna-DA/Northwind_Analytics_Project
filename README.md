@@ -1,7 +1,7 @@
 # Northwind Analytics Project
 
 **Author:** Hosna Hassanzadeh
-###📄 [Schema Report](./Project_Details/schema-report.md)
+### 📄 [Schema Report](./Project_Details/schema-report.md)
 A comprehensive study of the Northwind Traders database, demonstrating SQL development from foundational queries to advanced, reusable analytical components.
 
 ## Environment & Tools
