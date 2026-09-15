@@ -34,7 +34,7 @@ GO
 
 -- Question 4: Which product categories exist, listed without duplicates?
 
-SELECT DISTINCT
-    CategoryID
-FROM dbo.Products;
+SELECT 
+    CategoryName
+FROM dbo.Categories;
 GO
