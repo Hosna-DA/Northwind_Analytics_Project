@@ -3,15 +3,15 @@ USE Northwind
 GO
 --QUESTION1:What total revenue has each product category generated?
    SELECT 
-     O.ProductID,
-     sum(O.unitprice) AS "total revenue",
-     CategoryName
-   FROM dbo.[Order Details] AS O
-   JOIN(SELECT ProductID,CategoryID
-     FROM dbo.Products) AS P
-	 ON P.ProductID=O.ProductID
+     C.CategoryID,
+	 CategoryName,
+     sum(OD.unitprice * OD.Quantity) AS TotalRevenue	 
+   FROM dbo.[Order Details] AS OD
+   JOIN dbo.Products AS P
+	 ON P.ProductID=OD.ProductID
    JOIN Categories AS C ON C.CategoryID=P.CategoryID
-   GROUP BY O.ProductID,CategoryName
+   GROUP BY C.CategoryID,C.CategoryName
+   ORDER BY TotalRevenue DESC
 GO
 
 --Question2:How many Orders has each employee handled?
