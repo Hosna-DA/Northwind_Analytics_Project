@@ -5,10 +5,12 @@ GO
 SELECT
 O.OrderID,
 C.CompanyName,
-C.ContactName
+E.FirstName + ' ' + E.LastName AS EmployeeName
 FROM dbo.Orders AS O
 INNER JOIN dbo.Customers AS C
   ON O.CustomerID=C.CustomerID
+INNER JOIN dbo.Employees AS E
+  ON E.EmployeeID=O.EmployeeID 
 ORDER BY OrderID
 GO
 --Question2:For every product,show its category name and its supplier's name in one row
