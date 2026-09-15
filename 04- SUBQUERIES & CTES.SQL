@@ -2,24 +2,19 @@
 USE Northwind
 GO
 -- Question1: Which customers spend more than the average customer?
-
-SELECT 
-    CustomerID, 
-    SUM(Quantity * UnitPrice) AS TotalSpent
-FROM dbo.[Order Details] AS OD
-JOIN dbo.Orders AS O ON OD.OrderID = O.OrderID
-GROUP BY CustomerID
-HAVING SUM(Quantity * UnitPrice) > (
-    -- Subquery: 
-    SELECT AVG(CustomerTotal)
-    FROM (
-        SELECT 
-		(Quantity * UnitPrice) AS CustomerTotal
-        FROM dbo.[Order Details] AS OD2
-        JOIN dbo.Orders AS O2 ON OD2.OrderID = O2.OrderID
-        
-    ) AS SubTable
+WITH CustomersTotals AS(
+	SELECT 
+       O.CustomerID,
+	   SUM(Quantity * UnitPrice) AS TotalSpent
+	FROM dbo.Orders AS O
+	JOIN dbo.[Order Details] AS OD
+	 ON O.OrderID=OD.OrderID
+	GROUP BY O.CustomerID
 )
+SELECT CustomerID,TotalSpent
+FROM CustomersTotals
+WHERE TotalSpent>(SELECT AVG( TotalSpent)
+                  FROM CustomersTotals)
 ORDER BY TotalSpent DESC
 GO
 --QUESTION2:What are the 3 best-selling products overall, by total revenue?
