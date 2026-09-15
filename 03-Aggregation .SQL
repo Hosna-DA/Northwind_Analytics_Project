@@ -22,19 +22,28 @@ GO
   GROUP BY EmployeeID
 GO
 --Question3:What is the average order value per customer?
-      SELECT 
-	   C.CustomerID,
-	   C.CompanyName AS "CustomerCompany",
-	   avg(UnitPrice*Quantity) AS "Avarage Value Of Each Customer"
-      FROM dbo.[Order Details] AS OI
-	  JOIN ( SELECT OrderID,CustomerID
-	         FROM dbo.Orders) AS O
-		ON O.OrderID=OI.OrderID
-	 JOIN dbo.Customers AS C
-	    ON C.CustomerID=O.CustomerID
-	GROUP BY C.CustomerID , C.CompanyName
-	Order by [Avarage Value Of Each Customer] DESC
- GO
+WITH OrderTotal AS(
+     SELECT  O.CustomerID,
+	         O.OrderID,
+			 SUM(UnitPrice*Quantity) AS OrderValue    
+	 FROM dbo.[Order Details] AS OD
+	 JOIN dbo.Orders AS O
+		ON O.OrderID=OD.OrderID
+	GROUP BY O.CustomerID,O.OrderID) 
+SELECT      
+        C.CustomerID,
+		C.CompanyName,
+	   AVG(OT.OrderValue) AS AvrageOrderValue 
+FROM OrderTotal AS OT
+JOIN dbo.Customers AS C
+  ON C.CustomerID=OT.CustomerID
+GROUP BY C.CustomerID,C.CompanyName 
+ORDER BY AvrageOrderValue DESC
+	    
+
+
+
+    
  --Question4:Which categories contain more than 10 products?
    SELECT 
      P.CategoryID,
