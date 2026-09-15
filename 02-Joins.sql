@@ -25,15 +25,24 @@ LEFT JOIN dbo.Suppliers AS S
    ON S.SupplierID=P.SupplierID
 GO
 --Question3:Which customers have never placed single order?
+--Way1:With Left join
 SELECT 
 C.CustomerID,
-C.CompanyName AS "SupplierCompany",
-O.OrderID
+C.CompanyName AS "SupplierCompany"
 FROM dbo.Customers AS C
 LEFT JOIN dbo.Orders AS O
   ON C.CustomerID=O.CustomerID
 WHERE OrderID IS NULL
 GO
+--Way2:NOT EXISTS
+SELECT 
+ C.CustomerID,
+ C.CompanyName AS "SupplierCompany"
+FROM dbo.Customers AS C
+WHERE NOT EXISTS(
+                  SELECT 1
+				  FROM dbo.Orders AS O
+				  where O.CustomerID=C.CustomerID)
 --Question4:For every order,show which shipping company deliverd it.
 SELECT 
 O.OrderID,
