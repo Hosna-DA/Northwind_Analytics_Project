@@ -5,7 +5,7 @@
 A comprehensive study of the Northwind Traders database, demonstrating SQL development from foundational queries to advanced, reusable analytical components.
 
 ## Environment & Tools
--**Database Engine:** Microsoft SQL Server 2022 (Standard Edition)
+- **Database Engine:** Microsoft SQL Server 2022 (Standard Edition)
 - **Client/Interface:** SQL Server Management Studio (SSMS)
 
 ## Repository Structure
